@@ -72,43 +72,15 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 
 > **Live Demo**: Visit [http://localhost:8000](http://localhost:8000) to see the application in action!
 
-### 🏠 Homepage
-![Homepage](screenshots/01_homepage.png)
-*Modern landing page with statistics, features, and call-to-action sections*
+![Homepage](screenshots/Homepage.png)
 
-### 👨‍🎓 Student Login
-![Student Login](screenshots/02_student_login.png)
-*Beautiful student login page with modern form design and validation*
+![Student Login Page](screenshots/Student%20Login%20Page.png)
 
-### 👨‍🏫 Faculty Login
-![Faculty Login](screenshots/03_faculty_login.png)
-*Professional faculty login interface with enhanced security features*
+![Educator Login Page](screenshots/Educator%20login%20Page.png)
 
-### 📝 Student Registration
-![Student Registration](screenshots/04_student_register.png)
-*Comprehensive registration form with real-time validation*
+![Student Dashboard](screenshots/Student%20Dashboard.png)
 
-### 🎓 Student Dashboard
-![Student Dashboard](screenshots/05_student_dashboard.png)
-*Interactive dashboard with quick actions and recent activity*
-
-### 📊 Faculty Dashboard
-![Faculty Dashboard](screenshots/06_faculty_dashboard.png)
-*Comprehensive faculty dashboard with statistics and management tools*
-
-### 📝 Exam Interface
-![Exam Interface](screenshots/07_exam_interface.png)
-*Modern exam interface with countdown timer and anti-cheat features*
-
-### 📈 Results & Analytics
-![Results Page](screenshots/08_results_page.png)
-*Detailed results page with performance analytics and visual feedback*
-
-### 📱 Mobile Responsive
-![Mobile View](screenshots/09_mobile_view.png)
-*Fully responsive design that works perfectly on all devices*
-
-> **Note**: To view all screenshots, open `screenshots.html` in your browser or visit the live application at `http://localhost:8000`
+![Why This Exam Portal](screenshots/Why%20This%20Exam%20Portal.png)
 
 ## 🚀 Quick Start
 
