@@ -302,18 +302,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Font Awesome for the comprehensive icon library
 - All contributors who helped improve this project
 
-## 📞 Support
-
-If you have any questions or need help, please:
-- Open an issue on GitHub
-- Contact the author via email
-- Check the documentation
-
----
-
-**⭐ Star this repository if you found it helpful!**
-
-![GitHub stars](https://img.shields.io/github/stars/aryankumawat/Exam-Portal?style=social)
-![GitHub forks](https://img.shields.io/github/forks/aryankumawat/Exam-Portal?style=social)
-![GitHub issues](https://img.shields.io/github/issues/aryankumawat/Exam-Portal)
-![GitHub license](https://img.shields.io/github/license/aryankumawat/Exam-Portal)
