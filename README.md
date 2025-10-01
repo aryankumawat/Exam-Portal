@@ -70,26 +70,45 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 
 ## 📸 Screenshots
 
-### Homepage
-![Homepage](https://via.placeholder.com/800x600/4F46E5/FFFFFF?text=Modern+Homepage+with+Statistics)
+> **Live Demo**: Visit [http://localhost:8000](http://localhost:8000) to see the application in action!
 
-### Student Login
-![Student Login](https://via.placeholder.com/800x600/10B981/FFFFFF?text=Beautiful+Student+Login+Page)
+### 🏠 Homepage
+![Homepage](screenshots/01_homepage.png)
+*Modern landing page with statistics, features, and call-to-action sections*
 
-### Faculty Login
-![Faculty Login](https://via.placeholder.com/800x600/F59E0B/FFFFFF?text=Professional+Faculty+Login)
+### 👨‍🎓 Student Login
+![Student Login](screenshots/02_student_login.png)
+*Beautiful student login page with modern form design and validation*
 
-### Student Dashboard
-![Student Dashboard](https://via.placeholder.com/800x600/8B5CF6/FFFFFF?text=Interactive+Student+Dashboard)
+### 👨‍🏫 Faculty Login
+![Faculty Login](screenshots/03_faculty_login.png)
+*Professional faculty login interface with enhanced security features*
 
-### Faculty Dashboard
-![Faculty Dashboard](https://via.placeholder.com/800x600/EF4444/FFFFFF?text=Comprehensive+Faculty+Dashboard)
+### 📝 Student Registration
+![Student Registration](screenshots/04_student_register.png)
+*Comprehensive registration form with real-time validation*
 
-### Exam Interface
-![Exam Interface](https://via.placeholder.com/800x600/06B6D4/FFFFFF?text=Modern+Exam+Taking+Interface)
+### 🎓 Student Dashboard
+![Student Dashboard](screenshots/05_student_dashboard.png)
+*Interactive dashboard with quick actions and recent activity*
 
-### Results Page
-![Results Page](https://via.placeholder.com/800x600/84CC16/FFFFFF?text=Detailed+Results+and+Analytics)
+### 📊 Faculty Dashboard
+![Faculty Dashboard](screenshots/06_faculty_dashboard.png)
+*Comprehensive faculty dashboard with statistics and management tools*
+
+### 📝 Exam Interface
+![Exam Interface](screenshots/07_exam_interface.png)
+*Modern exam interface with countdown timer and anti-cheat features*
+
+### 📈 Results & Analytics
+![Results Page](screenshots/08_results_page.png)
+*Detailed results page with performance analytics and visual feedback*
+
+### 📱 Mobile Responsive
+![Mobile View](screenshots/09_mobile_view.png)
+*Fully responsive design that works perfectly on all devices*
+
+> **Note**: To view all screenshots, open `screenshots.html` in your browser or visit the live application at `http://localhost:8000`
 
 ## 🚀 Quick Start
 
