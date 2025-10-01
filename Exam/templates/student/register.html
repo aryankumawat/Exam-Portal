@@ -1,88 +1,345 @@
+{% extends 'base_auth.html' %}
 {% load static %}
-{% include 'base_auth.html' %}
+
+{% block title %}Student Registration - Exam Portal{% endblock %}
 
 {% block body %}
-
-<style>
-*{
-  color: #745959;
-}
-img{
-  width:35em;
-  height:58.5em;
-    padding-right: 20%;
-
-}
-.row{
-  display: grid;
-    margin: 0%;
-    padding: 10%;
-    background: rgba(0,0,0,0.5);
-  grid-template-columns: 40% auto;
-}
-input[type=submit]:hover{
-        background: #87FF9B;
-    }
-.overlay{
-    height: 100%;
-    width: 100%;
-    z-index: 1;
-    top: 0;
-    left: 0;
-}
-</style>
- <div class="overlay">
-  <div class="row">
-    <div class="col"><br><br>
-      <img src="{% static 'img/registration.jpg' %}" alt="">
-    </div>
-    <div class="col">
-        <div class="container">
-      <div class="card mt-5">
-        <div class="card-body">
-          <div class="card-title py-3">
-            <h4>Register for an account</h4>
-          </div>
-          <form action="{% url 'register' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% include 'partials/_messages.html' %}
-            <div class="form-group">
-			<label for = "username">{{ student_form.username.label_tag }} </label>
-              {{student_form.username}}
+<div class="w-full max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <!-- Left Side - Visual Content -->
+        <div class="hidden lg:block slide-in">
+            <div class="relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-500 rounded-3xl transform -rotate-6"></div>
+                <div class="relative bg-white rounded-3xl p-8 shadow-2xl">
+                    <div class="text-center">
+                        <div class="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user-plus text-6xl text-white"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Join Our Community!</h2>
+                        <p class="text-gray-600 text-lg">Start your educational journey with our comprehensive exam portal.</p>
+                    </div>
+                    
+                    <!-- Benefits List -->
+                    <div class="mt-8 space-y-4">
+                        <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                            <span class="text-gray-700">Access to comprehensive exam materials</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-blue-50 rounded-lg">
+                            <i class="fas fa-chart-line text-blue-500 mr-3"></i>
+                            <span class="text-gray-700">Track your learning progress</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-purple-50 rounded-lg">
+                            <i class="fas fa-certificate text-purple-500 mr-3"></i>
+                            <span class="text-gray-700">Earn certificates and achievements</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-orange-50 rounded-lg">
+                            <i class="fas fa-users text-orange-500 mr-3"></i>
+                            <span class="text-gray-700">Connect with fellow students</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="invalid-feedback " style="display: none;">
-              <p>
-              </p>
-            </div>
-            <p class="text-sm text-success usernamevalidOut"></p>
-            <div class="form-group">
-              <label for = "email">Email</label>
-              {{student_form.email}}
-            </div>
-            <div class="email-feedback invalid-feedback" style="display: none">
-              <p>
-              </p>
-            </div>
-            <div>
-              {{student_info_form.as_p}}
-            </div>
-            <div class="form-group">
-              <label for = "password">{{ student_form.password.label_tag }} </label>
-              {{student_form.password}}
-              <small class="float-right py-2 showPasswordToggle">SHOW</small>
-            </div>
-            <input type="submit" value="Register" class = "btn btn-block" style="border-color:#745959; color:#745959;"/>
-          </form>
-          <div class="container">
-            <span class = "text-lead lead"> Already have an account? </span><a href = "{% url 'login' %}" class="" style="color:#745959;">Login</a>
-          </div>
         </div>
-      </div>
+        
+        <!-- Right Side - Registration Form -->
+        <div class="fade-in">
+            <div class="card-modern rounded-3xl p-8 lg:p-12">
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user-plus text-3xl text-white"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2">Create Account</h1>
+                    <p class="text-gray-600">Join thousands of students already learning</p>
+                </div>
+                
+                <!-- Messages -->
+                {% if messages %}
+                    <div class="mb-6">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} p-4 rounded-lg mb-4 {% if message.tags == 'error' %}bg-red-100 text-red-700 border border-red-200{% else %}bg-green-100 text-green-700 border border-green-200{% endif %}">
+                                <div class="flex items-center">
+                                    <i class="fas fa-{% if message.tags == 'error' %}exclamation-circle{% else %}check-circle{% endif %} mr-2"></i>
+                                    {{ message }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <form action="{% url 'register' %}" method="post" enctype="multipart/form-data" class="space-y-6" onsubmit="return validateRegistrationForm(this)">
+                    {% csrf_token %}
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Username -->
+                        <div class="md:col-span-2">
+                            <label for="usernamefield" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-user mr-2"></i>Username *
+                            </label>
+                            <input type="text" 
+                                   name="username" 
+                                   id="usernamefield"
+                                   value="{{ fieldValues.username|default:'' }}"
+                                   placeholder="Choose a unique username"
+                                   class="w-full px-4 py-3 input-modern rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-all duration-300"
+                                   required>
+                            <div class="invalid-feedback text-red-500 text-sm mt-1" style="display: none;"></div>
+                            <div class="usernamevalidOut text-blue-500 text-sm mt-1" style="display: none;"></div>
+                        </div>
+                        
+                        <!-- Email -->
+                        <div class="md:col-span-2">
+                            <label for="emailfield" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-envelope mr-2"></i>Email Address *
+                            </label>
+                            <input type="email" 
+                                   name="email" 
+                                   id="emailfield"
+                                   value="{{ fieldValues.email|default:'' }}"
+                                   placeholder="Enter your email address"
+                                   class="w-full px-4 py-3 input-modern rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-all duration-300"
+                                   required>
+                            <div class="email-feedback text-red-500 text-sm mt-1" style="display: none;"></div>
+                        </div>
+                        
+                        <!-- Password -->
+                        <div class="md:col-span-2">
+                            <label for="passwordfield" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-lock mr-2"></i>Password *
+                            </label>
+                            <div class="relative">
+                                <input type="password" 
+                                       name="password" 
+                                       id="passwordfield" 
+                                       placeholder="Create a strong password"
+                                       class="w-full px-4 py-3 input-modern rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-all duration-300 pr-12"
+                                       required>
+                                <button type="button" 
+                                        onclick="togglePassword('passwordfield', 'togglePasswordIcon')"
+                                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                                </button>
+                            </div>
+                            <div class="mt-2 text-sm text-gray-600">
+                                <div class="flex items-center">
+                                    <div id="length-check" class="flex items-center mr-4">
+                                        <i class="fas fa-circle text-gray-300 mr-1"></i>
+                                        <span>At least 8 characters</span>
+                                    </div>
+                                    <div id="strength-indicator" class="text-xs"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Address -->
+                        <div class="md:col-span-2">
+                            <label for="addressfield" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-map-marker-alt mr-2"></i>Address
+                            </label>
+                            <textarea name="address" 
+                                      id="addressfield" 
+                                      placeholder="Enter your address (optional)"
+                                      rows="3"
+                                      class="w-full px-4 py-3 input-modern rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-all duration-300 resize-none"></textarea>
+                        </div>
+                        
+                        <!-- Stream -->
+                        <div>
+                            <label for="streamfield" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-graduation-cap mr-2"></i>Stream/Field
+                            </label>
+                            <input type="text" 
+                                   name="stream" 
+                                   id="streamfield" 
+                                   placeholder="e.g., Computer Science"
+                                   class="w-full px-4 py-3 input-modern rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-all duration-300">
+                        </div>
+                        
+                        <!-- Profile Picture -->
+                        <div>
+                            <label for="picturefield" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-camera mr-2"></i>Profile Picture
+                            </label>
+                            <div class="relative">
+                                <input type="file" 
+                                       name="picture" 
+                                       id="picturefield" 
+                                       accept="image/*"
+                                       class="w-full px-4 py-3 input-modern rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-all duration-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div class="flex items-start">
+                        <input type="checkbox" 
+                               id="terms" 
+                               class="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                               required>
+                        <label for="terms" class="ml-2 text-sm text-gray-600">
+                            I agree to the 
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Terms of Service</a> 
+                            and 
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" 
+                            class="w-full btn-modern text-white py-3 px-6 rounded-xl font-semibold text-lg transition-all duration-300 hover:shadow-lg">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Create Account
+                    </button>
+                </form>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-gray-600">
+                        Already have an account? 
+                        <a href="{% url 'login' %}" class="text-blue-600 hover:text-blue-800 font-semibold ml-1">
+                            Sign in here
+                        </a>
+                    </p>
+                </div>
+                
+                <!-- Quick Access Links -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="{% url 'faculty-register' %}" class="flex items-center justify-center p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-300">
+                            <i class="fas fa-chalkboard-teacher mr-2 text-gray-600"></i>
+                            <span class="text-sm font-medium text-gray-700">Faculty Registration</span>
+                        </a>
+                        <a href="{% url 'faculty-login' %}" class="flex items-center justify-center p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-300">
+                            <i class="fas fa-sign-in-alt mr-2 text-gray-600"></i>
+                            <span class="text-sm font-medium text-gray-700">Faculty Login</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-	</div>
-    <div class="col-md-4"></div>
-  </div>
 </div>
-<script src = "{% static 'js/register.js' %}" type="text/javascript"></script>
 
-{% endblock  %}
+<script>
+function togglePassword(fieldId, iconId) {
+    const passwordField = document.getElementById(fieldId);
+    const toggleIcon = document.getElementById(iconId);
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    }
+}
+
+// Password strength checker
+document.getElementById('passwordfield').addEventListener('input', function() {
+    const password = this.value;
+    const lengthCheck = document.getElementById('length-check');
+    const strengthIndicator = document.getElementById('strength-indicator');
+    
+    // Length check
+    if (password.length >= 8) {
+        lengthCheck.innerHTML = '<i class="fas fa-check-circle text-green-500 mr-1"></i><span>At least 8 characters</span>';
+    } else {
+        lengthCheck.innerHTML = '<i class="fas fa-circle text-gray-300 mr-1"></i><span>At least 8 characters</span>';
+    }
+    
+    // Strength indicator
+    let strength = 0;
+    if (password.length >= 8) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/[a-z]/.test(password)) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[^A-Za-z0-9]/.test(password)) strength++;
+    
+    const strengthTexts = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
+    const strengthColors = ['text-red-500', 'text-orange-500', 'text-yellow-500', 'text-blue-500', 'text-green-500'];
+    
+    if (password.length > 0) {
+        strengthIndicator.innerHTML = `<span class="${strengthColors[strength - 1]} font-medium">${strengthTexts[strength - 1]}</span>`;
+    } else {
+        strengthIndicator.innerHTML = '';
+    }
+});
+
+// Real-time validation
+document.getElementById('usernamefield').addEventListener('input', function() {
+    if (this.value.length > 0) {
+        this.classList.remove('border-red-500');
+        this.classList.add('border-green-500');
+    } else {
+        this.classList.remove('border-green-500');
+    }
+});
+
+document.getElementById('emailfield').addEventListener('input', function() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (this.value.length > 0) {
+        if (emailRegex.test(this.value)) {
+            this.classList.remove('border-red-500');
+            this.classList.add('border-green-500');
+        } else {
+            this.classList.remove('border-green-500');
+            this.classList.add('border-red-500');
+        }
+    } else {
+        this.classList.remove('border-green-500', 'border-red-500');
+    }
+});
+
+// Form validation
+function validateRegistrationForm(form) {
+    const inputs = form.querySelectorAll('input[required], textarea[required]');
+    let isValid = true;
+    
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            input.classList.add('border-red-500');
+            isValid = false;
+        } else {
+            input.classList.remove('border-red-500');
+        }
+    });
+    
+    // Check terms and conditions
+    const termsCheckbox = document.getElementById('terms');
+    if (!termsCheckbox.checked) {
+        showNotification('Please accept the terms and conditions', 'error');
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+// Add loading state to form submission
+document.querySelector('form').addEventListener('submit', function(e) {
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creating Account...';
+    submitBtn.disabled = true;
+    
+    // Re-enable after 5 seconds (in case of slow response)
+    setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }, 5000);
+});
+
+// File upload preview
+document.getElementById('picturefield').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // You can add image preview functionality here
+            console.log('File selected:', file.name);
+        };
+        reader.readAsDataURL(file);
+    }
+});
+</script>
+{% endblock %}

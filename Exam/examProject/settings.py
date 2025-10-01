@@ -25,11 +25,17 @@ INSTALLED_APPS = [
     'student',
     'studentPreferences',
     'questions',
-    'faculty',
+    'Educator',
+    'security',
+    'api',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'security.rate_limiting.RateLimitMiddleware',
+    'security.rate_limiting.SecurityHeadersMiddleware',
+    'security.rate_limiting.ExamSecurityMiddleware',
+    'security.rate_limiting.IPWhitelistMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -127,6 +133,9 @@ MESSAGE_TAGS = {
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.environ.get('EMAIL_HOST')

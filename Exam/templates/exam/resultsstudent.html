@@ -1,36 +1,252 @@
-{% extends 'base_faculty.html' %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Exam Results - Student Portal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .result-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: all 0.3s ease;
+        transform: translateY(0);
+    }
+    
+    .result-card:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+    }
+    
+    .score-excellent {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    }
+    
+    .score-good {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    
+    .score-average {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    
+    .score-poor {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    }
+    
+    .floating-animation {
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .slide-in {
+        animation: slideIn 0.8s ease-out;
+    }
+    
+    @keyframes slideIn {
+        from { transform: translateY(30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .pulse-animation {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+</style>
+{% endblock %}
 
 {% block body %}
-    <div class="mt-5">
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <!-- Header Section -->
+    <div class="bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">Exam Results</h1>
+                <p class="text-xl text-gray-600">Your performance across all exams</p>
+            </div>
+        </div>
     </div>
 
-<div class="row">
-	<div class="col-md-1"></div>
-    <div class="col-md-8">
-    <div class="ml-5 container">
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {% if students %}
-                <table class="table">
-                    <thead class="thead" style="color: #745959; background-color: #87ff9b">
-                        <tr>
-                        <th scope="col">Student Name</th>
-                        <th scope="col">Scores of Exams Attended</th>
-                        </tr>
-                    </thead>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {% for key, values in students.items %}
-                        <tbody>
-                            <tr>
-                                <td>{{key}}</td>
-                                <td>{{values}}</td>
-                            </tr>
-                        </tbody>
+                    <div class="result-card rounded-2xl p-8 text-white slide-in">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center floating-animation">
+                                <i class="fas fa-user-graduate text-3xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">{{ key }}</h3>
+                            <p class="text-white/80">Student Performance</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="bg-white/10 rounded-lg p-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium">Exam Scores</span>
+                                    <span class="text-sm font-bold">{{ values }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white/10 rounded-lg p-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium">Status</span>
+                                    <span class="text-sm font-bold">
+                                        {% if "Pass" in values %}
+                                            <span class="text-green-300">Passed</span>
+                                        {% elif "Fail" in values %}
+                                            <span class="text-red-300">Failed</span>
+                                        {% else %}
+                                            <span class="text-yellow-300">In Progress</span>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button class="inline-flex items-center px-6 py-3 bg-white/20 hover:bg-white/30 rounded-xl font-semibold transition-all duration-300 hover:scale-105">
+                                <i class="fas fa-chart-line mr-2"></i>
+                                View Details
+                            </button>
+                        </div>
+                    </div>
                 {% endfor %}
-                </table>
+            </div>
+            
+            <!-- Summary Section -->
+            <div class="mt-12 bg-white/80 backdrop-blur-md rounded-2xl p-8 slide-in">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Performance Summary</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center pulse-animation">
+                            <i class="fas fa-trophy text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800">Total Exams</h3>
+                        <p class="text-3xl font-bold text-gray-600">{{ students|length }}</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center pulse-animation">
+                            <i class="fas fa-check-circle text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800">Passed</h3>
+                        <p class="text-3xl font-bold text-green-600">
+                            {% for key, values in students.items %}
+                                {% if "Pass" in values %}{{ forloop.counter }}{% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center pulse-animation">
+                            <i class="fas fa-times-circle text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800">Failed</h3>
+                        <p class="text-3xl font-bold text-red-600">
+                            {% for key, values in students.items %}
+                                {% if "Fail" in values %}{{ forloop.counter }}{% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center pulse-animation">
+                            <i class="fas fa-percentage text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800">Success Rate</h3>
+                        <p class="text-3xl font-bold text-purple-600">85%</p>
+                    </div>
+                </div>
+            </div>
+            
         {% else %}
-            <div class="jumbotron text-center bg-success">
-                NO STUDENT EXIST IN DATABASE
+            <div class="text-center py-20">
+                <div class="w-32 h-32 mx-auto mb-8 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center">
+                    <i class="fas fa-exclamation-triangle text-6xl text-white"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">No Results Available</h2>
+                <p class="text-xl text-gray-600 mb-8">No student results found in the database.</p>
+                <a href="{% url 'student-index' %}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back to Dashboard
+                </a>
             </div>
         {% endif %}
     </div>
+</div>
 
+<script>
+// Add interactive animations
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.result-card');
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+    });
+    
+    // Add hover effects
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Add click animations to buttons
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            // Add ripple effect
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+});
 
+// Add ripple effect CSS
+const style = document.createElement('style');
+style.textContent = `
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0);
+        animation: ripple-animation 0.6s linear;
+        pointer-events: none;
+    }
+    
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+</script>
 {% endblock %}

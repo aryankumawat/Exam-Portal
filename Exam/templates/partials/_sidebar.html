@@ -1,142 +1,148 @@
 {% load static %}
-<style>
-  *{
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    text-decoration: none;
-  }
+<nav class="space-y-2">
+    <!-- Dashboard -->
+    <a href="{% url 'index' %}" class="nav-item flex items-center px-4 py-3 text-white hover:bg-white/10 rounded-lg transition-all duration-300 {% if request.resolver_match.url_name == 'index' %}active bg-white/20{% endif %}">
+        <i class="fas fa-home text-xl mr-4"></i>
+        <span class="font-medium">Dashboard</span>
+    </a>
 
+    <!-- Exams Section -->
+    <div class="mt-6">
+        <div class="flex items-center px-4 py-2 text-white/80 text-sm font-semibold uppercase tracking-wider">
+            <i class="fas fa-file-alt mr-3"></i>
+            Exams
+        </div>
+        <div class="ml-6 space-y-1">
+            <a href="{% url 'view_exams_student' %}" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300 {% if 'view_exams' in request.resolver_match.url_name %}active bg-white/20{% endif %}">
+                <i class="fas fa-calendar-alt text-lg mr-4"></i>
+                <span>Upcoming Exams</span>
+            </a>
+            <a href="{% url 'student-previous' %}" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300 {% if 'previous' in request.resolver_match.url_name %}active bg-white/20{% endif %}">
+                <i class="fas fa-history text-lg mr-4"></i>
+                <span>Previous Exams</span>
+            </a>
+        </div>
+    </div>
 
-  .sidebar{
-    border-radius: 0.5em;
-    position: fixed;
-    top: 5em;
-    left: -16em;
-    width: 17em;
-    height: 100%;
-    background: white;
-    transition: all .5s ease;
-    z-index: 1;
-    box-shadow: 0.3em 0.3em 0.2em #d6d6d6;
-  }
+    <!-- Performance Section -->
+    <div class="mt-6">
+        <div class="flex items-center px-4 py-2 text-white/80 text-sm font-semibold uppercase tracking-wider">
+            <i class="fas fa-chart-line mr-3"></i>
+            Performance
+        </div>
+        <div class="ml-6 space-y-1">
+            <a href="{% url 'view_students_attendance' %}" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300 {% if 'attendance' in request.resolver_match.url_name %}active bg-white/20{% endif %}">
+                <i class="fas fa-clipboard-check text-lg mr-4"></i>
+                <span>Attendance</span>
+            </a>
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-trophy text-lg mr-4"></i>
+                <span>Achievements</span>
+            </a>
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-chart-bar text-lg mr-4"></i>
+                <span>Analytics</span>
+            </a>
+        </div>
+    </div>
 
-  .sidebar header{
-    font-size: 2em;
-    color: #745959;
-    text-align: center;
-    line-height: 2em;
-    background: none;
-    user-select: none;
-  }
+    <!-- Study Materials -->
+    <div class="mt-6">
+        <div class="flex items-center px-4 py-2 text-white/80 text-sm font-semibold uppercase tracking-wider">
+            <i class="fas fa-book mr-3"></i>
+            Resources
+        </div>
+        <div class="ml-6 space-y-1">
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-file-pdf text-lg mr-4"></i>
+                <span>Study Materials</span>
+            </a>
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-video text-lg mr-4"></i>
+                <span>Video Lectures</span>
+            </a>
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-question-circle text-lg mr-4"></i>
+                <span>Practice Tests</span>
+            </a>
+        </div>
+    </div>
 
-  .sidebar ul a{
-    color: #745959;
-  }
+    <!-- Communication -->
+    <div class="mt-6">
+        <div class="flex items-center px-4 py-2 text-white/80 text-sm font-semibold uppercase tracking-wider">
+            <i class="fas fa-comments mr-3"></i>
+            Communication
+        </div>
+        <div class="ml-6 space-y-1">
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-envelope text-lg mr-4"></i>
+                <span>Messages</span>
+                <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
+            </a>
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-bullhorn text-lg mr-4"></i>
+                <span>Announcements</span>
+            </a>
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-users text-lg mr-4"></i>
+                <span>Study Groups</span>
+            </a>
+        </div>
+    </div>
 
-  .sidebar li{
-    display: block;
-    width: 100%;
-    line-height: 2em;
-    font-size: 1.5em;
-    color: #745959;
-    padding-left: 1.5em;
-    box-sizing: border-box;
-    border-top: 0.1em solid rgba(116, 89, 89,0.1);
-  }
+    <!-- Settings Section -->
+    <div class="mt-6">
+        <div class="flex items-center px-4 py-2 text-white/80 text-sm font-semibold uppercase tracking-wider">
+            <i class="fas fa-cog mr-3"></i>
+            Settings
+        </div>
+        <div class="ml-6 space-y-1">
+            <a href="{% url 'email-student-pref' %}" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300 {% if 'pref' in request.resolver_match.url_name %}active bg-white/20{% endif %}">
+                <i class="fas fa-user-cog text-lg mr-4"></i>
+                <span>Account Settings</span>
+            </a>
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-bell text-lg mr-4"></i>
+                <span>Notifications</span>
+            </a>
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-shield-alt text-lg mr-4"></i>
+                <span>Privacy</span>
+            </a>
+        </div>
+    </div>
 
-  ul li:hover a{
-    padding-left: 1em;
-    transition: 0.6s;
-  }
+    <!-- Help & Support -->
+    <div class="mt-6">
+        <div class="flex items-center px-4 py-2 text-white/80 text-sm font-semibold uppercase tracking-wider">
+            <i class="fas fa-question-circle mr-3"></i>
+            Support
+        </div>
+        <div class="ml-6 space-y-1">
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-life-ring text-lg mr-4"></i>
+                <span>Help Center</span>
+            </a>
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-headset text-lg mr-4"></i>
+                <span>Contact Support</span>
+            </a>
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-white/90 hover:bg-white/10 rounded-lg transition-all duration-300">
+                <i class="fas fa-book-open text-lg mr-4"></i>
+                <span>Documentation</span>
+            </a>
+        </div>
+    </div>
 
-  .sidebar ul a i {
-    margin-right: 10em;
-  }
-
-  #check{
-    display:none;
-  }
-
-  label #btn, label #cancel{
-    position: absolute;
-    cursor: pointer;
-    border-radius: 0.1em;
-  }
-
-  label #btn{
-    left: 1em;
-    top: 2.1em;
-    font-size: 2.5em;
-    color: #a3d5ff;
-    padding: 0.2em;
-    border: #bdaf7b;
-    transition: all 0.5s;
-  }
-
-  label #cancel{
-    z-index: 1111;
-    left: -5.5em;
-    top: 2.1em;
-    font-size: 2.5em;
-    color: #a3d5ff;
-    padding: 0.2em;
-    transition: all 0.5s ease;
-  }
-
-  #check:checked ~ .sidebar{
-    left: 0;
-  }
-
-  #check:checked ~ label #btn{
-    left: 2em;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  #check:checked ~ label #cancel{
-    left: 5.5em;
-  }
-
-  #check:checked ~ section{
-    margin-left: 20em;
-  }
-
-  section{
-    padding: 2em 5em 5em 2em;
-    transition: all 0.5s ease;
-  }
-
-</style>
-<input type="checkbox" id="check">
-<label for="check">
-  <i class="fas fa-bars" id="btn"></i>
-  <i class="fas fa-times" id="cancel"></i>
-</label>
-<div class="sidebar">
-  <header>
-    Dashboard
-  </header>
-  <ul>
-    <ul>
-      <li><a href="{% url 'index' %}">Index</a></li>
-    </ul>
-    <li><i class="fas fa-file-alt"></i>  Exams</li>
-    <ul>
-      <li><a href="{% url 'view_exams' %}">Exams</a></li>
-    </ul>
-    <li><i class="fas fa-clipboard-list"></i>  Summary</li>
-    <ul>
-      <li><a href="{% url 'view_students_attendance' %}">Attendance</a></li>
-      <li><a href="{% url 'student-previous' %}">Results and Previous Exams</a></li>
-    </ul>
-    <li><i class="fas fa-sliders-h"></i>  Settings and Actions </a></li>
-    <ul>
-      <li><a href="{% url 'email-student-pref' %}">General Settings</a></li>
-	  <form id="my_form" action="{% url 'logout' %}" method="POST">
-             {% csrf_token %}
-            <li><a href="javascript:{}" onclick="document.getElementById('my_form').submit();">Logout</a></li>
-      </form>
-    </ul>
-  </ul>
-</div>
+    <!-- Logout -->
+    <div class="mt-8 pt-6 border-t border-white/20">
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="nav-item flex items-center w-full px-4 py-3 text-white/90 hover:bg-red-500/20 hover:text-red-200 rounded-lg transition-all duration-300">
+                <i class="fas fa-sign-out-alt text-lg mr-4"></i>
+                <span>Logout</span>
+            </button>
+        </form>
+    </div>
+</nav>

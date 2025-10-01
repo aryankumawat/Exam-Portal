@@ -7,9 +7,10 @@ name = "pypi"
 django = "*"
 bcrypt = "*"
 pillow = "*"
+argon2-cffi = "*"
 validate-email = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.8"
+python_version = "3.11"

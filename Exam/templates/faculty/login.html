@@ -1,85 +1,207 @@
 {% extends 'base_auth.html' %}
-
 {% load static %}
 
+{% block title %}Faculty Login - Exam Portal{% endblock %}
 
 {% block body %}
-<style>
-/* *{
-	color: #745959;
-} */
-img{
-  width:25em;
-  height:22.6em;
-  transform:translateX(6em);
-
-}
-.row{
-  display: grid;
-    padding: 5% 15% 20% 10%;
-    background: rgba(0,0,0,0.5);
-  grid-template-columns: 40% auto;
-}
-input[type=submit]:hover{
-        background: #A3D5FF;
-    }
-.overlay{
-    height: 100%;
-    width: 100%;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    }
-</style>
-<div class="overlay">
-	<div class="row">
-		<div class="col"><br><br>
-			<img src={% static 'img/login.jpg' %} alt="">
-		</div>
-		<div class="col">
-			<div class="container">
-				<div class="card mt-5">
-					<div class="card-body">
-						<div class="card-title py-3">
-
-					<h4>Login to your account</h4>
-					<h5>Please Note this is login for faculty only</h5>
-					</div>
-					<form action="{% url 'faculty-login' %}" method="post">
-						{% csrf_token %}
-
-						{% include 'partials/_messages.html' %}
-
-					<div class="form-group">
-
-						<input type="text" name="username" id = "usernamefield"
-						value="{{fieldValues.username}}" placeholder ="username" class="form-control form-control-sm">
-					</div>
-
-					<div class="form-group">
-
-						<input type="password" name="password" id = "passwordfield" placeholder ="password" class="form-control form-control-sm">
-					</div>
-
-					<input type="submit" value="Login" class = "btn btn-block" style="border-color:#745959; color:#745959;"/>
-
-				</form>
-					<div class="container">
-						<span class = "text-lead lead"> Dont have an account? </span><a href = "{% url 'faculty-register' %}" class="">Register</a>
-
-						<br>
-
-						<span  class = "text-lead lead"> Forgot Password? </span><a href = "{% url 'password_reset_faculty' %}" class="">Reset</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		</div>
-		<div class="col-md-4"></div>
-	</div>
+<div class="w-full max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <!-- Left Side - Visual Content -->
+        <div class="hidden lg:block slide-in">
+            <div class="relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-500 rounded-3xl transform rotate-6"></div>
+                <div class="relative bg-white rounded-3xl p-8 shadow-2xl">
+                    <div class="text-center">
+                        <div class="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-chalkboard-teacher text-6xl text-white"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Welcome, Educator!</h2>
+                        <p class="text-gray-600 text-lg">Access your comprehensive teaching dashboard and manage your educational content.</p>
+                    </div>
+                    
+                    <!-- Feature Cards -->
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="text-center p-4 bg-purple-50 rounded-xl">
+                            <i class="fas fa-plus-circle text-2xl text-purple-500 mb-2"></i>
+                            <p class="text-sm font-medium text-gray-700">Create Exams</p>
+                        </div>
+                        <div class="text-center p-4 bg-pink-50 rounded-xl">
+                            <i class="fas fa-chart-bar text-2xl text-pink-500 mb-2"></i>
+                            <p class="text-sm font-medium text-gray-700">Analytics</p>
+                        </div>
+                        <div class="text-center p-4 bg-blue-50 rounded-xl">
+                            <i class="fas fa-users text-2xl text-blue-500 mb-2"></i>
+                            <p class="text-sm font-medium text-gray-700">Manage Students</p>
+                        </div>
+                        <div class="text-center p-4 bg-green-50 rounded-xl">
+                            <i class="fas fa-file-alt text-2xl text-green-500 mb-2"></i>
+                            <p class="text-sm font-medium text-gray-700">Reports</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Side - Login Form -->
+        <div class="fade-in">
+            <div class="card-modern rounded-3xl p-8 lg:p-12">
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-chalkboard-teacher text-3xl text-white"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2">Faculty Login</h1>
+                    <p class="text-gray-600">Sign in to access your teaching dashboard</p>
+                    <div class="mt-3 px-4 py-2 bg-yellow-100 border border-yellow-300 rounded-lg">
+                        <p class="text-sm text-yellow-800">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            This login is for educators and faculty members only
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Messages -->
+                {% if messages %}
+                    <div class="mb-6">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} p-4 rounded-lg mb-4 {% if message.tags == 'error' %}bg-red-100 text-red-700 border border-red-200{% else %}bg-green-100 text-green-700 border border-green-200{% endif %}">
+                                <div class="flex items-center">
+                                    <i class="fas fa-{% if message.tags == 'error' %}exclamation-circle{% else %}check-circle{% endif %} mr-2"></i>
+                                    {{ message }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <form action="{% url 'faculty-login' %}" method="post" class="space-y-6" onsubmit="return validateForm(this)">
+                    {% csrf_token %}
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="usernamefield" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-user mr-2"></i>Username
+                            </label>
+                            <input type="text" 
+                                   name="username" 
+                                   id="usernamefield"
+                                   value="{{ fieldValues.username|default:'' }}"
+                                   placeholder="Enter your faculty username"
+                                   class="w-full px-4 py-3 input-modern rounded-xl border-2 border-gray-200 focus:border-purple-500 focus:outline-none transition-all duration-300"
+                                   required>
+                        </div>
+                        
+                        <div>
+                            <label for="passwordfield" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-lock mr-2"></i>Password
+                            </label>
+                            <div class="relative">
+                                <input type="password" 
+                                       name="password" 
+                                       id="passwordfield" 
+                                       placeholder="Enter your password"
+                                       class="w-full px-4 py-3 input-modern rounded-xl border-2 border-gray-200 focus:border-purple-500 focus:outline-none transition-all duration-300 pr-12"
+                                       required>
+                                <button type="button" 
+                                        onclick="togglePassword()"
+                                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-eye" id="toggleIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+                            <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                        </label>
+                        <a href="{% url 'password_reset_faculty' %}" class="text-sm text-purple-600 hover:text-purple-800 font-medium">
+                            Forgot password?
+                        </a>
+                    </div>
+                    
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 px-6 rounded-xl font-semibold text-lg transition-all duration-300 hover:shadow-lg hover:from-purple-600 hover:to-pink-600">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Sign In
+                    </button>
+                </form>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-gray-600">
+                        Don't have a faculty account? 
+                        <a href="{% url 'faculty-register' %}" class="text-purple-600 hover:text-purple-800 font-semibold ml-1">
+                            Register here
+                        </a>
+                    </p>
+                </div>
+                
+                <!-- Quick Access Links -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="{% url 'login' %}" class="flex items-center justify-center p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-300">
+                            <i class="fas fa-graduation-cap mr-2 text-gray-600"></i>
+                            <span class="text-sm font-medium text-gray-700">Student Login</span>
+                        </a>
+                        <a href="/admin/" class="flex items-center justify-center p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-300">
+                            <i class="fas fa-cog mr-2 text-gray-600"></i>
+                            <span class="text-sm font-medium text-gray-700">Admin Panel</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<script>
+function togglePassword() {
+    const passwordField = document.getElementById('passwordfield');
+    const toggleIcon = document.getElementById('toggleIcon');
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    }
+}
 
-<script src = "{% static 'js/register.js' %}" type="text/javascript"></script>
+// Add loading state to form submission
+document.querySelector('form').addEventListener('submit', function(e) {
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Signing In...';
+    submitBtn.disabled = true;
+    
+    // Re-enable after 3 seconds (in case of slow response)
+    setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }, 3000);
+});
 
+// Add real-time validation
+document.getElementById('usernamefield').addEventListener('input', function() {
+    if (this.value.length > 0) {
+        this.classList.remove('border-red-500');
+        this.classList.add('border-green-500');
+    } else {
+        this.classList.remove('border-green-500');
+    }
+});
+
+document.getElementById('passwordfield').addEventListener('input', function() {
+    if (this.value.length > 0) {
+        this.classList.remove('border-red-500');
+        this.classList.add('border-green-500');
+    } else {
+        this.classList.remove('border-green-500');
+    }
+});
+</script>
 {% endblock %}

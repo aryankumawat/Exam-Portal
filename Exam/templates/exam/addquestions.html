@@ -1,34 +1,370 @@
 {% extends 'base_faculty.html' %}
+{% load static %}
+
+{% block title %}Add Questions - Faculty Portal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .form-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 35px 70px rgba(0, 0, 0, 0.15);
+    }
+    
+    .input-modern {
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        transition: all 0.3s ease;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 16px;
+        color: #374151;
+    }
+    
+    .input-modern:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        background: rgba(255, 255, 255, 1);
+    }
+    
+    .textarea-modern {
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        transition: all 0.3s ease;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 16px;
+        color: #374151;
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    .textarea-modern:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        background: rgba(255, 255, 255, 1);
+    }
+    
+    .btn-modern {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .btn-modern:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+    
+    .floating-animation {
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .slide-in {
+        animation: slideIn 0.8s ease-out;
+    }
+    
+    @keyframes slideIn {
+        from { transform: translateY(30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .form-group {
+        margin-bottom: 24px;
+    }
+    
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #374151;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .form-help {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 4px;
+    }
+</style>
+{% endblock %}
 
 {% block body %}
-    <div class="mt-5">
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <!-- Header Section -->
+    <div class="bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">Add Questions</h1>
+                <p class="text-xl text-gray-600">Create new questions for your exam</p>
+            </div>
+        </div>
     </div>
 
-<style>
-*{
-  color: #745959;
-}
-button[type=submit]:hover{
-        background: #87FF9B;
-    }
-    #id_questions{display:block;width:100%;height:calc(10em);padding:.375rem .75rem;font-size:1rem;font-weight:400;line-height:1.5;color:#745959;background-color:#fff;background-clip:padding-box;border:1px solid #745959;border-radius:.25rem;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}
-</style>
-<div class="row">
-	<div class="col-md-2"></div>
-    <div class="col-md-6">
-        <div class="ml-5 card">
-            <form method="POST" action="{% url 'faculty-addquestions' %}">
-                <div class="container">
-                    {% csrf_token %}
-                    {{examform.as_p}}
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="form-card rounded-2xl p-8 slide-in">
+            <form method="POST" action="{% url 'faculty-addquestions' %}" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Question Field -->
+                <div class="form-group">
+                    <label for="{{ examform.question.id_for_label }}" class="form-label">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Question
+                    </label>
+                    {{ examform.question|add_class:"textarea-modern" }}
+                    {% if examform.question.help_text %}
+                        <div class="form-help">{{ examform.question.help_text }}</div>
+                    {% endif %}
+                    {% if examform.question.errors %}
+                        <div class="text-red-500 text-sm mt-1">
+                            {% for error in examform.question.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
-                <div class="text-center">
-                <button class= "btn" style="border-color:#745959; color:#745959;"type="submit">Submit</button>
+                
+                <!-- Options -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-group">
+                        <label for="{{ examform.optionA.id_for_label }}" class="form-label">
+                            <i class="fas fa-circle mr-2"></i>
+                            Option A
+                        </label>
+                        {{ examform.optionA|add_class:"input-modern" }}
+                        {% if examform.optionA.errors %}
+                            <div class="text-red-500 text-sm mt-1">
+                                {% for error in examform.optionA.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ examform.optionB.id_for_label }}" class="form-label">
+                            <i class="fas fa-circle mr-2"></i>
+                            Option B
+                        </label>
+                        {{ examform.optionB|add_class:"input-modern" }}
+                        {% if examform.optionB.errors %}
+                            <div class="text-red-500 text-sm mt-1">
+                                {% for error in examform.optionB.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ examform.optionC.id_for_label }}" class="form-label">
+                            <i class="fas fa-circle mr-2"></i>
+                            Option C
+                        </label>
+                        {{ examform.optionC|add_class:"input-modern" }}
+                        {% if examform.optionC.errors %}
+                            <div class="text-red-500 text-sm mt-1">
+                                {% for error in examform.optionC.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ examform.optionD.id_for_label }}" class="form-label">
+                            <i class="fas fa-circle mr-2"></i>
+                            Option D
+                        </label>
+                        {{ examform.optionD|add_class:"input-modern" }}
+                        {% if examform.optionD.errors %}
+                            <div class="text-red-500 text-sm mt-1">
+                                {% for error in examform.optionD.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Correct Answer -->
+                <div class="form-group">
+                    <label for="{{ examform.correct_ans.id_for_label }}" class="form-label">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Correct Answer
+                    </label>
+                    <div class="grid grid-cols-4 gap-4">
+                        <label class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                            <input type="radio" name="{{ examform.correct_ans.name }}" value="A" class="w-5 h-5 text-blue-600">
+                            <span class="font-medium">A</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                            <input type="radio" name="{{ examform.correct_ans.name }}" value="B" class="w-5 h-5 text-blue-600">
+                            <span class="font-medium">B</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                            <input type="radio" name="{{ examform.correct_ans.name }}" value="C" class="w-5 h-5 text-blue-600">
+                            <span class="font-medium">C</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+                            <input type="radio" name="{{ examform.correct_ans.name }}" value="D" class="w-5 h-5 text-blue-600">
+                            <span class="font-medium">D</span>
+                        </label>
+                    </div>
+                    {% if examform.correct_ans.errors %}
+                        <div class="text-red-500 text-sm mt-1">
+                            {% for error in examform.correct_ans.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Marks -->
+                <div class="form-group">
+                    <label for="{{ examform.marks.id_for_label }}" class="form-label">
+                        <i class="fas fa-star mr-2"></i>
+                        Marks
+                    </label>
+                    {{ examform.marks|add_class:"input-modern" }}
+                    {% if examform.marks.help_text %}
+                        <div class="form-help">{{ examform.marks.help_text }}</div>
+                    {% endif %}
+                    {% if examform.marks.errors %}
+                        <div class="text-red-500 text-sm mt-1">
+                            {% for error in examform.marks.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="text-center pt-6">
+                    <button type="submit" class="btn-modern">
+                        <i class="fas fa-plus mr-2"></i>
+                        Add Question
+                    </button>
                 </div>
             </form>
         </div>
+        
+        <!-- Help Section -->
+        <div class="mt-8 bg-white/80 backdrop-blur-md rounded-2xl p-6 slide-in">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-lightbulb mr-2 text-yellow-500"></i>
+                Tips for Creating Great Questions
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <p class="text-gray-600">Write clear, concise questions that test understanding</p>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <p class="text-gray-600">Make all options plausible to avoid obvious answers</p>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <p class="text-gray-600">Use consistent formatting and language</p>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <p class="text-gray-600">Avoid negative phrasing when possible</p>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <p class="text-gray-600">Test one concept per question</p>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <p class="text-gray-600">Review questions for clarity and accuracy</p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 </div>
 
-
+<script>
+// Add interactive animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Add floating animation to form card
+    const formCard = document.querySelector('.form-card');
+    formCard.classList.add('floating-animation');
+    
+    // Add click animations to radio buttons
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            // Remove selected class from all labels
+            const allLabels = document.querySelectorAll('label[for*="correct_ans"]');
+            allLabels.forEach(label => {
+                label.classList.remove('bg-blue-100', 'border-blue-300');
+                label.classList.add('bg-gray-50');
+            });
+            
+            // Add selected class to current label
+            const currentLabel = this.closest('label');
+            currentLabel.classList.remove('bg-gray-50');
+            currentLabel.classList.add('bg-blue-100', 'border-blue-300');
+        });
+    });
+    
+    // Add form validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const requiredFields = form.querySelectorAll('input[required], textarea[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                field.classList.remove('border-red-500');
+            }
+        });
+        
+        if (!isValid) {
+            e.preventDefault();
+            alert('Please fill in all required fields.');
+        }
+    });
+    
+    // Add loading state to submit button
+    const submitBtn = document.querySelector('button[type="submit"]');
+    submitBtn.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Adding Question...';
+        this.disabled = true;
+    });
+});
+</script>
 {% endblock %}

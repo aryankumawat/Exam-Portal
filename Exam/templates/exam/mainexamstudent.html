@@ -1,48 +1,144 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block css_block %}
-<link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+{% block title %}Available Exams - Student Portal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .exam-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: all 0.3s ease;
+        transform: translateY(0);
+    }
+    
+    .exam-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(102, 126, 234, 0.3);
+    }
+    
+    .exam-card-completed {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    }
+    
+    .exam-card-upcoming {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    
+    .floating-animation {
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .slide-in {
+        animation: slideIn 0.8s ease-out;
+    }
+    
+    @keyframes slideIn {
+        from { transform: translateY(30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+</style>
 {% endblock %}
 
 {% block body %}
-    <style>
-        img{
-        height:15em;
-        width:5em;
-      }
-    </style>
-    <div class="mt-5">
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <!-- Header Section -->
+    <div class="bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">Available Exams</h1>
+                <p class="text-xl text-gray-600">Choose an exam to begin your assessment</p>
+            </div>
+        </div>
     </div>
-    <div class="container">
-            <div class="row">
-                {% if exams %}
-                    {% for exam in exams %}
-                        <div class="card col-md-3 mt-3 ml-3 text-center" style="width: 18rem;">
-                            <img class="card-img-top" src="{% static 'img/book.png' %}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{exam.name}}</h5>
-                                <p class="card-text text-center">Professor {{exam.professor}}</p>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% if exams %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for exam in exams %}
+                    <div class="exam-card rounded-2xl p-8 text-white slide-in">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center floating-animation">
+                                <i class="fas fa-book text-3xl"></i>
                             </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item text-center">Question Paper - {{exam.question_paper.qPaperTitle}}</li>
-                            </ul>
-                            <div class="card-body text-center">
-                                <a onclick = window.open("{% url 'appear-exam' exam.id  %}","","width=800,height=800") target="_blank" class="btn btn-outline-danger">Appear</a>
+                            <h3 class="text-2xl font-bold mb-2">{{ exam.name }}</h3>
+                            <p class="text-white/80">Professor {{ exam.professor }}</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-center justify-between p-3 bg-white/10 rounded-lg">
+                                <span class="text-sm font-medium">Question Paper</span>
+                                <span class="text-sm">{{ exam.question_paper.qPaperTitle }}</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-white/10 rounded-lg">
+                                <span class="text-sm font-medium">Duration</span>
+                                <span class="text-sm">{{ exam.duration }} minutes</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-white/10 rounded-lg">
+                                <span class="text-sm font-medium">Questions</span>
+                                <span class="text-sm">{{ exam.question_paper.questions.count }}</span>
                             </div>
                         </div>
-                    {% endfor %}
-                {% else %}
-            <div class="jumbotron col-md-12 text-center bg-success">
-                NO PENDING EXAMS
+                        
+                        <div class="text-center">
+                            <a href="{% url 'appear-exam' exam.id %}" 
+                               target="_blank"
+                               onclick="window.open(this.href, '', 'width=1200,height=800,scrollbars=yes,resizable=yes'); return false;"
+                               class="inline-flex items-center px-6 py-3 bg-white/20 hover:bg-white/30 rounded-xl font-semibold transition-all duration-300 hover:scale-105">
+                                <i class="fas fa-play mr-2"></i>
+                                Start Exam
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-20">
+                <div class="w-32 h-32 mx-auto mb-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                    <i class="fas fa-check-circle text-6xl text-white"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">No Pending Exams</h2>
+                <p class="text-xl text-gray-600 mb-8">Great job! You have completed all available exams.</p>
+                <a href="{% url 'student-previous' %}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300">
+                    <i class="fas fa-history mr-2"></i>
+                    View Previous Results
+                </a>
             </div>
         {% endif %}
-            </div>
     </div>
+</div>
+
+<script>
+// Add interactive animations
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.exam-card');
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+    });
     
-
-
+    // Add click animations
+    const examLinks = document.querySelectorAll('a[href*="appear-exam"]');
+    examLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Add loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Opening Exam...';
+            this.style.pointerEvents = 'none';
+            
+            // Reset after 2 seconds
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.style.pointerEvents = 'auto';
+            }, 2000);
+        });
+    });
+});
+</script>
 {% endblock %}
-
-
-          
