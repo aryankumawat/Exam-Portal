@@ -1,83 +1,255 @@
 {% extends 'base_faculty.html' %}
+{% load static %}
+
+{% block title %}Faculty Dashboard - Exam Portal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .card-modern {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .card-modern:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 35px 70px rgba(0, 0, 0, 0.15);
+    }
+    
+    .step-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .step-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(102, 126, 234, 0.3);
+    }
+    
+    .floating-animation {
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .slide-in {
+        animation: slideIn 0.8s ease-out;
+    }
+    
+    @keyframes slideIn {
+        from { transform: translateY(30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .blinking {
+        animation: blinkingText 3s infinite;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        text-align: center;
+        color: #2d3748;
+        font-size: 2.5rem;
+        background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    @keyframes blinkingText {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+</style>
+{% endblock %}
 
 {% block body %}
-    <style>
-    body{
-      background-color: #f5f5f5;
-    }
-
-    *{
-      color: #745959;
-    }
-
-    .cards{
-      width: 25em;
-      height: 15em;
-      background-color: white;
-      display: flex;
-      align-items:center;
-      justify-content: center;
-      background-color: #87ff9b;
-    }
-    .distribute{
-	  padding-left: 5em;
-      display: grid;
-      grid-template-columns: 33.33% 33.33% auto;
-    }
-    .jumbotron{
-      padding-top: 5em;
-      padding-bottom: 15em;
-    }
-
-    .cards h2 {
-      display: none;
-    }
-    .cards:hover h1{
-      display: none;
-      transition: all 0.3s ease;
-    }
-    .cards:hover h2 {
-      display: flex;
-      text-align: center;
-      padding-left: 1em;
-      padding-right: 1em;
-      transition: all 0.3s ease;
-    }
-    .cards:hover {
-      transform: translateX(-0.5em);
-      transform: translateY(-0.5em);
-      box-shadow: 0.7em 0.7em 0.5em #d6d6d6;
-      transition: 0.3s ease;
-    }
-
-
-    </style>
-    <div class="container mt-5">
-      {% include 'partials/_messages.html' %}
-    </div>
-    <div class="container mt-5 text-center">
-      <h3>Instructions to create New Exam</h3>
-    </div>
-    <div class="container mt-5">
-    </div>
-    <div class="distribute">
-      <a href="{% url 'faculty-addquestions' %}">
-        <div class="cards">
-          <h1>First Step</h1>
-          <h2>First you will have to create new questions to be added in question paper</h2>
+<div class="min-h-screen dashboard-gradient">
+    <!-- Header -->
+    <div class="bg-white/10 backdrop-blur-md border-b border-white/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chalkboard-teacher text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-white ml-3">Faculty Dashboard</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-white">
+                        <p class="text-sm opacity-80">Welcome back,</p>
+                        <p class="font-semibold">{{ user.username }}</p>
+                    </div>
+                    <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-white"></i>
+                    </div>
+                    <a href="{% url 'logout' %}" class="text-white hover:text-gray-200 transition-colors">
+                        <i class="fas fa-sign-out-alt text-xl"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-      </a>
-      <a  href="{% url 'faculty-add_question_paper' %}">
-        <div class="cards">
-          <h1>Second Step</h1>
-          <h2>Now Create question paper and add those questions.</h2>
-        </div>
-      </a>
-      <a href="{% url 'view_exams' %}">
-        <div class="cards">
-          <h1>Third Step</h1>
-          <h2>Finally you can create an exam paper and add the question paper.</h2>
-        </div>
-      </a>
     </div>
-  {% endblock %}
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} p-4 rounded-lg mb-4 {% if message.tags == 'error' %}bg-red-100 text-red-700 border border-red-200{% else %}bg-green-100 text-green-700 border border-green-200{% endif %}">
+                    <div class="flex items-center">
+                        <i class="fas fa-{% if message.tags == 'error' %}exclamation-circle{% else %}check-circle{% endif %} mr-2"></i>
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Welcome Section -->
+        <div class="text-center mb-12">
+            <h2 class="blinking mb-4">Process to Create New Examination</h2>
+            <p class="text-xl text-white/80">Follow these simple steps to create and manage your exams</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-gradient-to-r from-pink-500 to-rose-500 rounded-2xl p-6 slide-in text-white">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm">Total Exams</p>
+                        <p class="text-3xl font-bold">24</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-file-alt text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl p-6 slide-in text-white">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm">Active Students</p>
+                        <p class="text-3xl font-bold">156</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-users text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-green-500 to-teal-500 rounded-2xl p-6 slide-in text-white">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm">Questions Created</p>
+                        <p class="text-3xl font-bold">342</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-question-circle text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-6 slide-in text-white">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm">Avg. Score</p>
+                        <p class="text-3xl font-bold">78%</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-chart-line text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exam Creation Steps -->
+        <div class="card-modern rounded-2xl p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">Exam Creation Process</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="{% url 'faculty-addquestions' %}" class="step-card rounded-2xl p-8 block text-center relative">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-white/20 rounded-full flex items-center justify-center floating-animation">
+                        <i class="fas fa-plus text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Step 1</h3>
+                    <p class="text-white/90 text-lg mb-4">Create Questions</p>
+                    <p class="text-white/80 text-sm">Add new questions that will be included in your exam. Create multiple choice, true/false, or essay questions.</p>
+                    <div class="absolute top-4 right-4 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                        <span class="text-sm font-bold">1</span>
+                    </div>
+                </a>
+                
+                <a href="{% url 'faculty-add_question_paper' %}" class="step-card rounded-2xl p-8 block text-center relative">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-white/20 rounded-full flex items-center justify-center floating-animation">
+                        <i class="fas fa-file-alt text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Step 2</h3>
+                    <p class="text-white/90 text-lg mb-4">Create Question Paper</p>
+                    <p class="text-white/80 text-sm">Organize your questions into a structured question paper with proper sections and time allocation.</p>
+                    <div class="absolute top-4 right-4 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                        <span class="text-sm font-bold">2</span>
+                    </div>
+                </a>
+                
+                <a href="{% url 'view_exams' %}" class="step-card rounded-2xl p-8 block text-center relative">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-white/20 rounded-full flex items-center justify-center floating-animation">
+                        <i class="fas fa-graduation-cap text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Step 3</h3>
+                    <p class="text-white/90 text-lg mb-4">Schedule Exam</p>
+                    <p class="text-white/80 text-sm">Set up the final exam with date, time, duration, and assign it to your students.</p>
+                    <div class="absolute top-4 right-4 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                        <span class="text-sm font-bold">3</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Add interactive animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Add hover effects to cards
+    const cards = document.querySelectorAll('.step-card, .card-modern');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Add click animations
+    const links = document.querySelectorAll('a[href]');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Add a subtle click animation
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
+        });
+    });
+    
+    // Add floating animation to step cards
+    const stepCards = document.querySelectorAll('.step-card');
+    stepCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.2}s`;
+    });
+});
+</script>
+{% endblock %}
