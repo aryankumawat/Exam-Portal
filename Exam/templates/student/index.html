@@ -25,12 +25,6 @@
     .feature-card {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        transition: all 0.3s ease;
-    }
-    
-    .feature-card:hover {
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: 0 25px 50px rgba(102, 126, 234, 0.3);
     }
     
     .stats-card {
@@ -492,15 +486,15 @@ document.addEventListener('DOMContentLoaded', function() {
         progressRing.style.strokeDashoffset = offset;
     }, 500);
     
-    // Add hover effects to cards
-    const cards = document.querySelectorAll('.feature-card, .card-modern');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
+    // Add click animations to Quick Actions cards
+    const quickActionCards = document.querySelectorAll('.feature-card, [class*="bg-gradient-to-r"]');
+    quickActionCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Add a subtle click animation
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
         });
     });
     
