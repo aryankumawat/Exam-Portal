@@ -17,7 +17,8 @@ from django.db import IntegrityError, transaction
 import logging
 
 from .models import StudentInfo, StuExam_DB, StuResults_DB, Stu_Question
-from questions.models import Question_DB, Question_Paper
+from questions.question_models import Question_DB
+from questions.questionpaper_models import Question_Paper
 
 logger = logging.getLogger(__name__)
 

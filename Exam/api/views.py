@@ -15,7 +15,8 @@ import json
 import logging
 
 from student.models import StudentInfo, StuExam_DB, StuResults_DB
-from questions.models import Question_DB, Question_Paper
+from questions.question_models import Question_DB
+from questions.questionpaper_models import Question_Paper
 from security.rate_limiting import rate_limit_decorator, exam_security_check
 
 logger = logging.getLogger(__name__)

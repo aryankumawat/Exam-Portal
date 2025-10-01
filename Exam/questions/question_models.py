@@ -13,19 +13,19 @@ class Question_DB(models.Model):
     optionD = models.CharField(max_length=100)
     answer = models.CharField(max_length=200, db_index=True)
     max_marks = models.IntegerField(default=0, db_index=True)
-    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=True, db_index=True)
+    # created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+    # updated_at = models.DateTimeField(auto_now=True)
+    # is_active = models.BooleanField(default=True, db_index=True)
 
     def __str__(self):
         return f'Question No.{self.qno}: {self.question} \t\t Options: \nA. {self.optionA} \nB.{self.optionB} \nC.{self.optionC} \nD.{self.optionD} '
     
     class Meta:
         indexes = [
-            models.Index(fields=['professor', 'is_active']),
-            models.Index(fields=['professor', 'created_at']),
+            # models.Index(fields=['professor', 'is_active']),
+            # models.Index(fields=['professor', 'created_at']),
             models.Index(fields=['max_marks']),
-            models.Index(fields=['created_at']),
+            # models.Index(fields=['created_at']),
         ]
 
 
