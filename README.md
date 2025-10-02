@@ -2,8 +2,6 @@
 
 A comprehensive, modern, and fully-featured online examination platform built with Django, featuring a beautiful responsive UI, advanced security features, and dynamic dashboards for both students and faculty.
 
-![Exam Portal Homepage](https://via.placeholder.com/1200x600/4F46E5/FFFFFF?text=Modern+Exam+Portal+System)
-
 ## ✨ Features
 
 ### 🎨 **Modern UI/UX**
