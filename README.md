@@ -11,7 +11,7 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 - **Smooth Animations**: Hover effects, transitions, and micro-interactions
 - **Professional Design**: Clean, modern interface with excellent user experience
 
-### 🔐 **Advanced Security & Beautiful Platform**
+### 🔐 **Advanced Security**
 - **Password Protection**: Secure password hashing with Django's built-in PBKDF2 with SHA256
 - **Rate Limiting**: Configurable rate limits for different endpoints (5 login attempts/minute)
 - **Security Headers**: CSP, X-Frame-Options, HSTS, and comprehensive security headers
@@ -22,7 +22,6 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 - **Session Security**: Secure session management with automatic timeout and regeneration
 - **SQL Injection Prevention**: Parameterized queries and ORM protection
 - **XSS Protection**: Cross-site scripting prevention with content security policies
-- **Beautiful & Secure UI**: Modern, responsive design with security-first approach
 
 ### 👨‍🎓 **Student Features**
 - **Modern Login/Registration**: Beautiful authentication pages with validation
