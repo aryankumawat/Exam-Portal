@@ -283,10 +283,6 @@ CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is not licensed under any specific license.
-
 ## 👨‍💻 Author
 
 **Aryan Kumawat**
