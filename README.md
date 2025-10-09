@@ -71,14 +71,19 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 > **Live Demo**: Visit [http://localhost:8000](http://localhost:8000) to see the application in action!
 
 ![Homepage](screenshots/Homepage.png)
+*Modern landing page with statistics, features, and call-to-action sections*
 
 ![Student Login Page](screenshots/Student%20Login%20Page.png)
+*Beautiful student login interface with modern form design and validation*
 
 ![Educator Login Page](screenshots/Educator%20login%20Page.png)
+*Professional faculty login page with enhanced security features*
 
 ![Student Dashboard](screenshots/Student%20Dashboard.png)
+*Interactive dashboard with quick actions, recent activity, and practice tests*
 
 ![Why This Exam Portal](screenshots/Why%20This%20Exam%20Portal.png)
+*Feature showcase page highlighting the platform's benefits and capabilities*
 
 ## 🚀 Quick Start
 
