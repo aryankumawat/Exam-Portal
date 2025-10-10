@@ -11,18 +11,6 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 - **Smooth Animations**: Hover effects, transitions, and micro-interactions
 - **Professional Design**: Clean, modern interface with excellent user experience
 
-### 🔐 **Advanced Security**
-- **Password Protection**: Secure password hashing with Django's built-in PBKDF2 with SHA256
-- **Rate Limiting**: Configurable rate limits for different endpoints (5 login attempts/minute)
-- **Security Headers**: CSP, X-Frame-Options, HSTS, and comprehensive security headers
-- **Anti-Cheat Detection**: Real-time monitoring for suspicious exam behavior and tab switching
-- **IP Whitelisting**: Admin access control with IP restrictions and geolocation filtering
-- **CSRF Protection**: Comprehensive CSRF protection across all forms and API endpoints
-- **Input Validation**: Robust validation and sanitization for all user inputs
-- **Session Security**: Secure session management with automatic timeout and regeneration
-- **SQL Injection Prevention**: Parameterized queries and ORM protection
-- **XSS Protection**: Cross-site scripting prevention with content security policies
-
 ### 👨‍🎓 **Student Features**
 - **Modern Login/Registration**: Beautiful authentication pages with validation
 - **Interactive Dashboard**: Real-time exam information and quick actions
@@ -65,10 +53,16 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 
 ### Security
 - **Django Security Middleware**: Built-in security features
-- **Rate Limiting**: Custom rate limiting implementation
-- **CSRF Protection**: Cross-site request forgery protection
-- **Input Validation**: Comprehensive input sanitization
-- **Session Management**: Secure session handling
+- **Password Protection**: Secure password hashing with Django's built-in PBKDF2 with SHA256
+- **Rate Limiting**: Configurable rate limits for different endpoints (5 login attempts/minute)
+- **Security Headers**: CSP, X-Frame-Options, HSTS, and comprehensive security headers
+- **Anti-Cheat Detection**: Real-time monitoring for suspicious exam behavior and tab switching
+- **IP Whitelisting**: Admin access control with IP restrictions and geolocation filtering
+- **CSRF Protection**: Comprehensive CSRF protection across all forms and API endpoints
+- **Input Validation**: Robust validation and sanitization for all user inputs
+- **Session Security**: Secure session management with automatic timeout and regeneration
+- **SQL Injection Prevention**: Parameterized queries and ORM protection
+- **XSS Protection**: Cross-site scripting prevention with content security policies
 
 ## 📸 Screenshots
 
