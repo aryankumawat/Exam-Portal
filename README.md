@@ -2,16 +2,16 @@
 
 A comprehensive, modern, and fully-featured online examination platform built with Django, featuring a beautiful responsive UI, enterprise-grade security features, and dynamic dashboards for both students and faculty. This beautiful and secure platform ensures a safe, reliable, and user-friendly examination experience.
 
-## ✨ Features
+## Features
 
-### 🎨 **Modern UI/UX**
+### **Modern UI/UX**
 - **Responsive Design**: Fully responsive layout that works on all devices
 - **Tailwind CSS**: Modern styling with beautiful animations and transitions
 - **Interactive Dashboards**: Dynamic, real-time dashboards for students and faculty
 - **Smooth Animations**: Hover effects, transitions, and micro-interactions
 - **Professional Design**: Clean, modern interface with excellent user experience
 
-### 👨‍🎓 **Student Features**
+### **Student Features**
 - **Modern Login/Registration**: Beautiful authentication pages with validation
 - **Interactive Dashboard**: Real-time exam information and quick actions
 - **Exam Taking Interface**: Modern exam interface with countdown timer
@@ -19,7 +19,7 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 - **Study Materials**: Access to learning resources and practice tests
 - **Profile Management**: Complete profile management with preferences
 
-### 👨‍🏫 **Faculty Features**
+### **Faculty Features**
 - **Faculty Dashboard**: Comprehensive dashboard with statistics and actions
 - **Question Management**: Advanced question creation and management system
 - **Exam Creation**: Step-by-step exam creation process
@@ -27,7 +27,7 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 - **Results Analysis**: Detailed analysis of student performance
 - **Attendance Tracking**: Monitor student attendance and participation
 
-### 🚀 **Technical Features**
+### **Technical Features**
 - **Database Optimization**: Comprehensive indexing and query optimization
 - **API Endpoints**: RESTful API with proper validation and error handling
 - **Real-time Updates**: Dynamic content updates without page refresh
@@ -35,7 +35,7 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 - **Performance Monitoring**: Built-in performance monitoring and logging
 - **Mobile Responsive**: Perfect experience on all device sizes
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Backend
 - **Django 5.2.7**: Modern Python web framework
@@ -64,7 +64,7 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 - **SQL Injection Prevention**: Parameterized queries and ORM protection
 - **XSS Protection**: Cross-site scripting prevention with content security policies
 
-## 📸 Screenshots
+## Screenshots
 
 > **Live Demo**: Visit [http://localhost:8000](http://localhost:8000) to see the application in action!
 
@@ -83,7 +83,7 @@ A comprehensive, modern, and fully-featured online examination platform built wi
 ![Why This Exam Portal](screenshots/Why%20This%20Exam%20Portal.png)
 *Feature showcase page highlighting the platform's benefits and capabilities*
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.11+
@@ -133,7 +133,7 @@ A comprehensive, modern, and fully-featured online examination platform built wi
    - Register as a student or faculty member
    - Start exploring the features!
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Exam-Portal/
@@ -155,7 +155,7 @@ Exam-Portal/
 └── README.md                            # This file
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 Create a `.env` file in the project root with:
@@ -189,7 +189,7 @@ DATABASES = {
 }
 ```
 
-## 🎯 Usage
+## Usage
 
 ### For Students
 1. **Register**: Create a new student account
@@ -211,23 +211,23 @@ DATABASES = {
 3. **System Configuration**: Configure system settings
 4. **Monitor System**: View system logs and statistics
 
-## 🔒 Security Features
+## Security Features
 
-### 🛡️ **Password & Authentication Security**
+### **Password & Authentication Security**
 - **Secure Password Hashing**: Django's PBKDF2 with SHA256 algorithm
 - **Password Strength Validation**: Enforces strong password requirements
 - **Account Lockout Protection**: Temporary lockout after failed login attempts
 - **Multi-Factor Authentication Ready**: Framework prepared for 2FA implementation
 - **Secure Session Management**: Automatic session timeout and regeneration
 
-### 🚫 **Rate Limiting & Access Control**
+### **Rate Limiting & Access Control**
 - **Login Attempts**: 5 attempts per minute with progressive delays
 - **API Calls**: 100 requests per hour with burst protection
 - **Exam Submissions**: 1 submission per 30 seconds to prevent spam
 - **IP Whitelisting**: Admin access restricted to specific IP addresses
 - **Geolocation Filtering**: Optional location-based access control
 
-### 🕵️ **Anti-Cheat & Monitoring**
+### **Anti-Cheat & Monitoring**
 - **Tab Switching Detection**: Real-time monitoring of browser focus changes
 - **Rapid Submission Detection**: Prevents automated bot submissions
 - **IP Monitoring**: Tracks suspicious IP activity and patterns
@@ -235,7 +235,7 @@ DATABASES = {
 - **Behavioral Analysis**: Monitors unusual exam-taking patterns
 - **Screenshot Prevention**: Blocks screenshot capture during exams
 
-### 🔐 **Data Protection & Privacy**
+### **Data Protection & Privacy**
 - **Input Sanitization**: All user inputs are thoroughly sanitized
 - **SQL Injection Prevention**: Parameterized queries and ORM protection
 - **XSS Protection**: Cross-site scripting prevention with CSP headers
@@ -243,7 +243,7 @@ DATABASES = {
 - **Data Encryption**: Sensitive data encrypted at rest and in transit
 - **Privacy Compliance**: GDPR-ready data handling and user consent
 
-## 📊 Performance Features
+## Performance Features
 
 ### Database Optimization
 - **Indexing**: Comprehensive database indexing
@@ -257,7 +257,7 @@ DATABASES = {
 - **CDN Ready**: Static files ready for CDN deployment
 - **Responsive Images**: Optimized images for different devices
 
-## 🧪 Testing
+## Testing
 
 ### Run Tests
 ```bash
@@ -271,7 +271,7 @@ coverage report
 coverage html
 ```
 
-## 🚀 Deployment
+## Deployment
 
 ### Production Deployment
 1. **Set DEBUG=False** in settings
@@ -291,7 +291,7 @@ COPY . .
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 ```
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
@@ -299,7 +299,7 @@ CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Django community for the excellent framework
 - Tailwind CSS for the beautiful styling system
