@@ -1,4 +1,4 @@
-# 🎓 Modern Exam Portal System
+# Exam Portal System
 
 A comprehensive, modern, and fully-featured online examination platform built with Django, featuring a beautiful responsive UI, enterprise-grade security features, and dynamic dashboards for both students and faculty. This beautiful and secure platform ensures a safe, reliable, and user-friendly examination experience.
 
